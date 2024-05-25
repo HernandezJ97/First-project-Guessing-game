@@ -1,0 +1,49 @@
+from random import randint  # randint - Used to generate a random number for the player to guess
+from IPython.display import clear_output  # clear_out -  Used to clear the output in the console
+
+
+def check_previous_guesses(guess, previous_guesses):
+    if guess in previous_guesses:
+        print("You have already guessed that number.")
+        return True
+    return False
+
+
+def play_game():
+    number = randint(0, 100)
+    guesses_limit = 5
+    guesses = 0
+    previous_guesses = []
+
+
+while not guessed:
+    ans = input("Try to guess the number I am thinking of you have 5 guesses! ")
+    guessed += 1
+    clear_output()
+    if number < 0 or number > 100:
+        print("Please guess a number between 0 and 100 Please.")
+        continue
+    if int(ans) == number:
+        print("Congrats! You guessed it correctly.")
+        # noinspection PyStringFormat
+        print(f"It took you {guesses} guesses!".format(guesses))
+        # use f-string to format since guesses is an int refer back to line 5 and 9
+        print("Would you like to play again?")
+        play_again = input("(yes/no): ")
+        if play_again.lower() == "yes":
+            # this should start the game over again. "it doesn't. gotta fix"
+            print("Great! Let's play again!")
+            # maybe a loop can make the game repeatable over and over again
+        elif play_again.lower() == "no":
+            print("Goodbye, Thanks for playing!")
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.:")
+            play_again = input("(yes/no): ")
+            # this should be a loop that will keep asking until the user enters a valid input
+            print("Great! Let's play again!")
+            # this should initialize the game again
+        break
+    elif int(ans) > number:
+        print("The number is lower than what you guessed.")
+    elif int(ans) < number:
+        print("The number is greater than what you guessed.")

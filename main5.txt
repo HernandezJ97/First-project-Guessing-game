@@ -1,0 +1,68 @@
+from random import randint  # randint - Used to generate a random number for the player to guess
+from IPython.display import clear_output  # clear_out -  Used to clear the output in the console
+
+
+def play_game():
+  while True:  # Loop to play multiple games
+    number = randint(0, 100)
+    guess_limit = 10  # Setting a limit of 10 guesses
+    guesses = 0
+    previous_guesses = []
+    guessed = False
+
+    while not guessed and guesses < guess_limit:  # Added condition to limit guesses
+      valid_guess = False
+      while not valid_guess:
+        try:
+          remaining_guesses = guess_limit - guesses
+          ans = input(
+              f"Try to guess the number I am thinking of, you have {remaining_guesses} guesses remaining! "
+          )
+          if 0 <= guesses <= 100:
+            valid_guess = True  # The guess is within the valid range, proceed.
+          else:
+            print(
+                "Your guess is out of bounds. Please guess a number between 0 and 100."
+            )
+        except ValueError:
+          print("Invalid input. Please enter a number.")
+        guesses += 1
+        clear_output()
+
+      try:
+        if int(ans) in previous_guesses:
+          print("You have already guessed that number.")
+          continue
+
+        previous_guesses.append(
+            int(ans))  # Adding the guess to previous guesses
+
+        if int(ans) == number:
+          print(
+              f"Congrats! You guessed it correctly, It took you {guesses} guesses!"
+          )
+          guessed = True  # Set the flag to end the game
+        elif int(ans) > number:
+          print("The number is lower than what you guessed.")
+        elif int(ans) < number:
+          print("The number is greater than what you guessed.")
+      except ValueError:
+        print("Invalid input. Please enter a number.")
+
+    if not guessed:
+      print("Sorry, you have used all your guesses. The number was:", number)
+
+    while True:
+      play_again = input("Would you want to play again? (yes/no): ").lower()
+      if play_again == "no":
+        print("Goodbye, Thanks for playing!")
+        return
+      elif play_again == "yes":
+        print("Great! Let's play again!")
+        break
+      else:
+        print("Invalid input. Please enter 'yes' or 'no'.")
+
+
+# Start the game
+play_game()

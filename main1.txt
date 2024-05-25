@@ -1,0 +1,33 @@
+from random import randint
+from IPython.display import clear_output
+guessed = False
+number = randint(0, 100)
+
+guesses = 0
+while not guessed:
+  ans = input("Try to guess the number I am thinking of! ")
+  guesses += 1
+  clear_output()
+
+try:
+    if int(ans) == number:
+except ValueError:
+    print("Invalid input. Please enter a number.")
+    print("Congrats! You guessed it correctly.")
+    print(f"It took you {guesses} guesses!".format(guesses))
+    print("Would you like to play again?")
+    play_again = input("(yes/no): ")
+    if play_again.lower() == "yes":
+        print("Great! Let's play again!")
+    elif play_again.lower() == "no":
+        print("Goodbye, Thanks for playing!")
+    else:
+        print("Invalid input. Please enter 'yes' or 'no'.:")
+        play_again = input("(yes/no): ")
+        print("Great! Let's play again!")
+
+    break
+elif int(ans) > number:
+    print("The number is lower than what you guessed.")
+elif int(ans) < number:
+    print("The number is greater than what you guessed.")
