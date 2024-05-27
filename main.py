@@ -5,8 +5,8 @@ from IPython.display import clear_output  # clear_out -  Used to clear the outpu
 def play_game():
     while True:  # Loop to play multiple games
         number = randint(0, 100)
-        guess_limit = 10  # Setting a limit of 10 guesses
-        guesses = 0
+        guess_limit = int(10)  # Setting a limit of 10 guesses
+        guesses = int(0)
         previous_guesses = []
         guessed = False
 
@@ -14,19 +14,19 @@ def play_game():
             remaining_guesses = guess_limit - guesses
             ans = input(
                 f"Try to guess the number I am thinking of, you have {remaining_guesses} guesses remaining! ")
-            guesses += 1
+            guesses += int(1)
             clear_output()
 
             try:
                 guess = int(ans)
-                if guess < 0 or guess > 100:
+                if guess < int(0) or guess > int(100):
                     print("Please input a number between 0 and 100.")
-                    guesses -= 1  # Decrement guesses count to compensate for invalid guess
+                    guesses -= int(1)  # Decrement guesses count to compensate for invalid guess
                     continue  # Prompt for guess again without advancing to next step
 
                 if int(ans) in previous_guesses:
                     print("You have already guessed that number.")
-                    guesses -= 1  # Decrement guesses count to compensate for repeated guess
+                    guesses -= int(1)  # Decrement guesses count to compensate for repeated guess
                     continue  # Prompt for guess again without advancing to next step
 
                 previous_guesses.append(int(ans))  # Adding the guess to previous guesses

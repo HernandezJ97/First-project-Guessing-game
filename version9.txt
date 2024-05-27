@@ -1,0 +1,51 @@
+from random import randint  # randint - Used to generate a random number for the player to guess
+from IPython.display import clear_output  # clear_out -  Used to clear the output in the console
+
+
+def play_game():
+    while True:  # Loop to play multiple games
+        number = randint(0, 100)
+        guess_limit = 10  # Setting a limit of 10 guesses
+        guesses = 0
+        previous_guesses = []
+        guessed = False
+
+        print("Try to guess the number I'm thinking of, between 0 and 100!")
+
+        while not guessed and guesses < guess_limit:  # Added condition to limit guesses
+            valid_guess = False
+            while not valid_guess:
+                try:
+                    guess = int(input(f"Enter your guess (you have {guess_limit - guesses} attempts left): "))
+                    if 0 <= guess <= 100:
+                        valid_guess = True  # The guess is within the valid range, proceed.
+                    else:
+                        print("Your guess is out of bounds. Please guess a number between 0 and 100.")
+                except ValueError:
+                    print("Invalid input. Please enter a number.")
+
+            # At this point, 'guess' is valid and within 0-100
+            guesses += 1  # Count the valid guess towards the limit
+
+            if guess in previous_guesses:
+                print("You've already guessed that number! Try again without losing a guess.")
+                guesses -= 1  # Do not penalize for repeated guesses
+            else:
+                previous_guesses.append(guess)
+
+            if guess == number:
+                print(f"Congrats! You've guessed it correctly in {guesses} attempts!")
+                guessed = True
+            elif guess < number:
+                print("The number is higher than your guess. Try again!")
+            else:  # guess > number
+                print("The number is lower than your guess. Try again!")
+
+            if not guessed and guesses == guess_limit:
+                print(f"You've reached your guess limit. The number was {number}. Better luck next time!")
+
+        # Ask if the user wants to play again
+        play_again = input("Would you like to play again? (yes/no): ").lower()
+        if play_again != "yes":
+            print("Thank you for playing! Goodbye.")
+            break  # Exit the while loop to end the game

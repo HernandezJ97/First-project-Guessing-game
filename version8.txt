@@ -1,0 +1,52 @@
+from random import randint  # randint - Used to generate a random number for the player to guess
+from IPython.display import clear_output  # clear_out -  Used to clear the output in the console
+
+
+def play_game():
+    while True:  # Loop to play multiple games
+        number = randint(0, 100)
+        guess_limit = 5  # Setting a limit of 5 guesses
+        guesses = 0
+        previous_guesses = []
+        guessed = False
+
+        if number < 0 or number > 100:
+            print("The generated number is not within the valid range. Exiting game.")
+            return
+
+        while not guessed and guesses < guess_limit:  # Added condition to limit guesses
+            remaining_guesses = guess_limit - guesses
+            prompt = f"Try to guess the number I am thinking of, you have {remaining_guesses} guesses remaining! "
+            ans = input(prompt)
+            guesses += 1
+            clear_output()
+
+            try:
+                if int(ans) in previous_guesses:
+                    print("You have already guessed that number.")
+                    continue
+
+                previous_guesses.append(int(ans))  # Adding the guess to previous guesses
+
+                if int(ans) == number:
+                    print("Congrats! You guessed it correctly.")
+                    print(f"It took you {guesses} guesses!")
+                    guessed = True  # Set the flag to end the game
+                elif int(ans) > number:
+                    print("The number is lower than what you guessed.")
+                elif int(ans) < number:
+                    print("The number is greater than what you guessed.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+        if not guessed:
+            print("Sorry, you ran out of guesses. The number was:", number)
+
+        play_again = input("Would you like to play again? (yes/no): ").lower()
+        if play_again == "no":
+            print("Goodbye, Thanks for playing!")
+            break  # Exit the loop if the player chooses not to play again
+
+
+# Start the game
+play_game()
